@@ -13,7 +13,15 @@ jobs:
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.14
+          gradle-version: 9.2.1
+      - name: Look up the newest Fabric versions for 1.21.11
+        run: |
+          YARN=$(curl -fsS "https://meta.fabricmc.net/v2/versions/yarn/1.21.11" | jq -r '.[0].version')
+          LOADER=$(curl -fsS "https://meta.fabricmc.net/v2/versions/loader" | jq -r '[.[] | select(.stable)][0].version')
+          API=$(curl -fsS -A "nebula-build" 'https://api.modrinth.com/v2/project/fabric-api/version?game_versions=%5B%221.21.11%22%5D&loaders=%5B%22fabric%22%5D' | jq -r '.[0].version_number')
+          echo "yarn=$YARN loader=$LOADER api=$API"
+          sed -i "s|^yarn_mappings=.*|yarn_mappings=$YARN|; s|^loader_version=.*|loader_version=$LOADER|; s|^fabric_api_version=.*|fabric_api_version=$API|" gradle.properties
+          cat gradle.properties
       - run: gradle build --stacktrace
       - run: |
           mkdir out
