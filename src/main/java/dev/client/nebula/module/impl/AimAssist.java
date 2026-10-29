@@ -41,6 +41,6 @@ public class AimAssist extends Module {
     }
 
     private static Vec3d aimPoint(PlayerEntity p) {
-        return p.getPos().add(0, p.getHeight() * 0.65, 0); // upper torso
+        return new Vec3d(p.getX(), p.getY() + p.getHeight() * 0.65, p.getZ()); // upper torso
     }
 }

@@ -79,7 +79,7 @@ public class AutoCrystal extends Module {
         for (EndCrystalEntity c : mc.world.getEntitiesByClass(EndCrystalEntity.class,
                 mc.player.getBoundingBox().expand(r), Entity::isAlive)) {
             if (mc.player.squaredDistanceTo(c) > r * r) continue;
-            Vec3d at = c.getPos();
+            Vec3d at = new Vec3d(c.getX(), c.getY(), c.getZ());
             double dT = damage(at, target), dS = damage(at, mc.player);
             if (dT >= effMin && safe(dS) && dT > bestScore) { bestScore = dT; best = c; }
         }
@@ -141,7 +141,7 @@ public class AutoCrystal extends Module {
             for (Direction dir : Direction.values()) {
                 BlockPos n = p.offset(dir);
                 if (mc.world.getBlockState(n).isAir()) continue; // need something to click against
-                double d = center.squaredDistanceTo(target.getPos());
+                double d = center.squaredDistanceTo(target.getX(), target.getY(), target.getZ());
                 if (d < bestDist) {
                     bestDist = d; bestPlace = p; bestNeighbor = n; bestFace = dir.getOpposite();
                 }
