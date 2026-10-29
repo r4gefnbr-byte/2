@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "nebula",
+  "version": "${version}",
+  "name": "Nebula Client",
+  "description": "Utility and combat client for singleplayer and anarchy servers.",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["dev.client.nebula.NebulaClient"]
+  },
+  "mixins": ["nebula.mixins.json", "nebula.fog.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
