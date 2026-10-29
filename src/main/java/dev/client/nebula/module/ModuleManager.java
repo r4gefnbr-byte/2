@@ -22,7 +22,6 @@ import dev.client.nebula.module.impl.Sprint;
 import dev.client.nebula.module.impl.Velocity;
 import dev.client.nebula.module.impl.Zoom;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -86,7 +85,7 @@ public class ModuleManager {
 
     /** True once per key press. */
     private boolean edge(long handle, int key) {
-        boolean down = InputUtil.isKeyPressed(handle, key);
+        boolean down = GLFW.glfwGetKey(handle, key) == GLFW.GLFW_PRESS;
         if (down) return held.add(key);
         held.remove(key);
         return false;
